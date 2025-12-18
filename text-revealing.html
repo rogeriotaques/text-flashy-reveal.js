@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>TextReveal.js</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="TextReveal.js - A JavaScript library for animated text reveal effects. See how to implement smooth text animations that trigger on scroll." />
+        <meta name="keywords" content="TextReveal.js, JavaScript, text animation, scroll animation, text reveal, web animation, CSS animation" />
+        <meta name="author" content="Rogerio Taques" />
+        <meta property="og:title" content="TextReveal.js - Animated Text Reveal Library" />
+        <meta property="og:description" content="Sample page demonstrating TextReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="TextReveal.js - Animated Text Reveal Library" />
+        <meta name="twitter:description" content="Sample page demonstrating TextReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                padding: 80px;
+            }
+
+            hgroup {
+                margin-bottom: 100vh;
+            }
+
+            h1 {
+                font-size: 56px;
+                font-weight: 700;
+                line-height: 1.2;
+            }
+        </style>
+    </head>
+    <body>
+        <hgroup>
+            <h1 id="hero-1">TextReveal.js</h1>
+            <p>Sample page of how <b>TextReveal.js</b> does work and how to implement it.</p>
+            <p>Scroll down to see it in action. 👇</p>
+        </hgroup>
+
+        <h2 id="hero-2">This second sentence animates only once!</h2>
+        <h3>And this one never animates. Now, scroll back. 👆🤗</h3>
+
+        <br>
+
+        <div>
+            <p>Crafted by <a href="https://x.com/rogeriotaques" target="_blank" rel="noopener noreferrer">Rogerio Taques</a>.</p>
+            <p>Made with ☕️ and plain JavaScript! Distributed under <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT</a> license.</p>
+        </div>
+
+        <script type="module">
+            import { textReveal } from "./text-reveal.js";
+
+            textReveal(document.querySelector("#hero-1"), {
+            replay: true,
+            revealDelay: 35,
+            threshold: 0.5
+            });
+
+            textReveal(document.querySelector("#hero-2"), {
+            revealDelay: 25,
+            threshold: 0.5,
+            fadeDuration: 250,
+            accentColor: 'blue'
+            });
+        </script>
+    </body>
+</html>

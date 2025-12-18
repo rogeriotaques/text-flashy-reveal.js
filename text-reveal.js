@@ -1,0 +1,141 @@
+/**
+ * TextReveal.js
+ * This little library makes text animations look awesome with zero hassle!
+ *
+ * Just throw any text element at it and watch the magic happen. Characters will
+ * fade in randomly with a nice color transition effect. Perfect for headers,
+ * hero sections, or anywhere you want to grab attention without being too flashy.
+ *
+ * You can customize colors, timing, and even make it replay every time someone
+ * scrolls back up. Simple to use, lightweight, and it just works. Just the way
+ * we like it!
+ *
+ * @author Rogerio Taques
+ * @version 0.1.0
+ * @license MIT
+ */
+export function textReveal(element, options = {}) {
+  if (!element) {
+    throw new Error('Element is required for textReveal');
+  }
+
+  const config = {
+    accentColor: "#ff7a00",
+    finalColor: "#000",
+    revealDelay: 40,
+    fadeDuration: 350,
+    colorDelay: 300,
+    replay: false,
+    threshold: 0.4,
+    ...options
+  };
+
+  let hasAnimated = false;
+  let animatableChars = [];
+
+  function splitText() {
+    const text = element.textContent;
+    element.textContent = "";
+    element.style.whiteSpace = "pre";
+
+    animatableChars = [];
+
+    for (const char of text) {
+      if (char === " ") {
+        const space = document.createElement("span");
+        space.textContent = " ";
+        space.style.display = "inline-block";
+        space.style.width = "0.35em";
+        element.appendChild(space);
+      } else {
+        const span = document.createElement("span");
+        span.textContent = char;
+        span.style.display = "inline-block";
+        span.style.opacity = "0";
+        span.style.color = config.accentColor;
+        span.setAttribute("aria-hidden", "true");
+        span.style.transition = `
+          opacity ${config.fadeDuration}ms ease,
+          color ${config.colorDelay}ms ease
+        `;
+        element.appendChild(span);
+        animatableChars.push(span);
+      }
+    }
+  }
+
+  function shuffle(array) {
+    return array
+      .map(item => ({ item, r: Math.random() }))
+      .sort((a, b) => a.r - b.r)
+      .map(o => o.item);
+  }
+
+  function animate() {
+    const shuffled = shuffle(animatableChars);
+
+    shuffled.forEach((char, index) => {
+      const delay = index * config.revealDelay;
+
+      setTimeout(() => {
+        char.style.opacity = "1";
+
+        setTimeout(() => {
+          char.style.color = config.finalColor;
+        }, config.colorDelay);
+      }, delay);
+    });
+  }
+
+  function reset(immediate = false) {
+    animatableChars.forEach(char => {
+      char.style.transition = immediate
+        ? "none"
+        : `opacity ${config.fadeDuration}ms ease, color ${config.colorDelay}ms ease`;
+
+      char.style.opacity = "0";
+      char.style.color = config.accentColor;
+
+      if (immediate) {
+        // force reflow so transition is restored cleanly
+        char.offsetHeight;
+        char.style.transition = `
+          opacity ${config.fadeDuration}ms ease,
+          color ${config.colorDelay}ms ease
+        `;
+      }
+    });
+  }
+
+  function observe() {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!hasAnimated || config.replay) {
+              animate();
+              hasAnimated = true;
+            }
+          } else {
+            if (config.replay && hasAnimated) {
+              reset(true);
+            }
+          }
+        });
+      },
+      { threshold: config.threshold }
+    );
+
+    observer.observe(element);
+  }
+
+  // Init
+  splitText();
+  reset(true); // ensure hidden on load
+  observe();
+
+  // Return cleanup function
+  return () => {
+    observer.disconnect();
+  };
+}
