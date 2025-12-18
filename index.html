@@ -2,17 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>TextReveal.js</title>
+        <title>TextFlashyReveal.js</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="TextReveal.js - A JavaScript library for animated text reveal effects. See how to implement smooth text animations that trigger on scroll." />
-        <meta name="keywords" content="TextReveal.js, JavaScript, text animation, scroll animation, text reveal, web animation, CSS animation" />
+        <meta name="description" content="TextFlashyReveal.js - A JavaScript library for animated text reveal effects. See how to implement smooth text animations that trigger on scroll." />
+        <meta name="keywords" content="TextFlashyReveal.js, JavaScript, text animation, scroll animation, text reveal, web animation, CSS animation" />
         <meta name="author" content="Rogerio Taques" />
-        <meta property="og:title" content="TextReveal.js - Animated Text Reveal Library" />
-        <meta property="og:description" content="Sample page demonstrating TextReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
+        <meta property="og:title" content="TextFlashyReveal.js - Animated Text Reveal Library" />
+        <meta property="og:description" content="Sample page demonstrating TextFlashyReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="TextReveal.js - Animated Text Reveal Library" />
-        <meta name="twitter:description" content="Sample page demonstrating TextReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
+        <meta name="twitter:title" content="TextFlashyReveal.js - Animated Text Reveal Library" />
+        <meta name="twitter:description" content="Sample page demonstrating TextFlashyReveal.js - a JavaScript library for creating smooth text reveal animations on scroll." />
         <style>
             body {
                 font-family: system-ui, sans-serif;
@@ -32,8 +32,8 @@
     </head>
     <body>
         <hgroup>
-            <h1 id="hero-1">TextReveal.js</h1>
-            <p>Sample page of how <b>TextReveal.js</b> does work and how to implement it.</p>
+            <h1 id="hero-1">TextFlashyReveal.js</h1>
+            <p>Sample page of how <b>TextFlashyReveal.js</b> does work and how to implement it.</p>
             <p>Scroll down to see it in action. 👇</p>
         </hgroup>
 
@@ -48,15 +48,15 @@
         </div>
 
         <script type="module">
-            import { textReveal } from "./text-flashy-reveal.js";
+            import { textFlashyReveal } from "./text-flashy-reveal.js";
 
-            textReveal(document.querySelector("#hero-1"), {
+            textFlashyReveal(document.querySelector("#hero-1"), {
             replay: true,
             revealDelay: 35,
             threshold: 0.5
             });
 
-            textReveal(document.querySelector("#hero-2"), {
+            textFlashyReveal(document.querySelector("#hero-2"), {
             revealDelay: 25,
             threshold: 0.5,
             fadeDuration: 250,
