@@ -1,5 +1,5 @@
 /**
- * TextReveal.js
+ * TextFlashyReveal.js
  * This little library makes text animations look awesome with zero hassle!
  *
  * Just throw any text element at it and watch the magic happen. Characters will
@@ -14,9 +14,9 @@
  * @version 0.1.0
  * @license MIT
  */
-export function textReveal(element, options = {}) {
+export function textFlashyReveal(element, options = {}) {
   if (!element) {
-    throw new Error('Element is required for textReveal');
+    throw new Error('Element is required for textFlashyReveal');
   }
 
   const config = {

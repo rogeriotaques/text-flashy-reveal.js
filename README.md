@@ -1,6 +1,6 @@
-# TextReveal.js
+# TextFlashyReveal.js
 
-A lightweight JavaScript library for creating beautiful text reveal animations that trigger on scroll. Perfect for headers, hero sections, and any text that needs to grab attention with a smooth, staggered reveal effect.
+A lightweight JavaScript library for creating beautiful text flashy-reveal animations that trigger on scroll. Perfect for headers, hero sections, and any text that needs to grab attention with a smooth, staggered reveal effect.
 
 ## ✨ Features
 
@@ -16,15 +16,15 @@ A lightweight JavaScript library for creating beautiful text reveal animations t
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TextReveal.js Demo</title>
+    <title>TextFlashyReveal.js Demo</title>
 </head>
 <body>
-    <h1 id="hero">Welcome to TextReveal.js</h1>
+    <h1 id="hero">Welcome to TextFlashyReveal.js</h1>
     
     <script type="module">
-        import { textReveal } from "./text-reveal.js";
+        import { textFlashyReveal } from "./text-reveal.js";
         
-        textReveal(document.querySelector("#hero"));
+        textFlashyReveal(document.querySelector("#hero"));
     </script>
 </body>
 </html>
@@ -32,7 +32,7 @@ A lightweight JavaScript library for creating beautiful text reveal animations t
 
 ## 📖 API Reference
 
-### `textReveal(element, options)`
+### `textFlashyReveal(element, options)`
 
 **Parameters:**
 - `element` (HTMLElement): The text element to animate
@@ -58,14 +58,14 @@ A lightweight JavaScript library for creating beautiful text reveal animations t
 
 ### Basic Usage
 ```js
-import { textReveal } from "./text-reveal.js";
+import { textFlashyReveal } from "./text-reveal.js";
 
-textReveal(document.querySelector("h1"));
+textFlashyReveal(document.querySelector("h1"));
 ```
 
 ### Custom Colors and Timing
 ```js
-textReveal(document.querySelector("#hero"), {
+textFlashyReveal(document.querySelector("#hero"), {
     accentColor: "#3b82f6",
     finalColor: "#1e293b",
     revealDelay: 25,
@@ -75,7 +75,7 @@ textReveal(document.querySelector("#hero"), {
 
 ### Replay on Scroll
 ```js
-textReveal(document.querySelector("#replay-text"), {
+textFlashyReveal(document.querySelector("#replay-text"), {
     replay: true,
     threshold: 0.5,
     revealDelay: 35
@@ -92,7 +92,7 @@ textReveal(document.querySelector("#replay-text"), {
 
 ## 🔧 How It Works
 
-TextReveal.js splits text into individual character spans, then uses CSS transitions and Intersection Observer to:
+TextFlashyReveal.js splits text into individual character spans, then uses CSS transitions and Intersection Observer to:
 1. Hide characters initially
 2. Detect when element enters viewport
 3. Stagger character reveals with randomized order

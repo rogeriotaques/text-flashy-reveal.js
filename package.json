@@ -1,11 +1,8 @@
 {
-  "name": "text-reveal.js",
+  "name": "text-flashy-reveal.js",
   "version": "0.1.0",
-  "description": "A lightweight JavaScript library for creating beautiful text reveal animations that trigger on scroll.",
-  "main": "text-reveal.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "A lightweight JavaScript library for creating beautiful text flashy-reveal animations that trigger on scroll.",
+  "main": "text-flashy-reveal.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rogeriotaques/text-reveal.js.git"
@@ -13,6 +10,7 @@
   "keywords": [
     "text",
     "reveal",
+    "flashy-reveal",
     "lightweight",
     "customizable",
     "zero-depencies",
@@ -21,7 +19,7 @@
   "author": "Rogerio Taques",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rogeriotaques/text-reveal.js/issues"
+    "url": "https://github.com/rogeriotaques/text-flashy-reveal.js/issues"
   },
-  "homepage": "https://github.com/rogeriotaques/text-reveal.js#readme"
+  "homepage": "https://github.com/rogeriotaques/text-flashy-reveal.js#readme"
 }
