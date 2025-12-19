@@ -16,7 +16,28 @@
  */
 export function textFlashyReveal(element, options = {}) {
   if (!element) {
-    throw new Error('Element is required for textFlashyReveal');
+    throw new Error("Element is required for textFlashyReveal");
+  }
+
+  function lightenColor(hex, percent = 50) {
+    hex = hex.replace("#", "");
+
+    // Parse RGB
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+
+    // Lighten by blending with white
+    const lighten = (color) =>
+      Math.round(color + (255 - color) * (percent / 100));
+
+    const newR = lighten(r);
+    const newG = lighten(g);
+    const newB = lighten(b);
+
+    // Convert back to hex
+    const toHex = (n) => n.toString(16).padStart(2, "0");
+    return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
   }
 
   const config = {
@@ -25,11 +46,17 @@ export function textFlashyReveal(element, options = {}) {
     revealDelay: 40,
     fadeDuration: 350,
     colorDelay: 300,
-    replay: false,
+    flashDelay: 150,
+    replay: true,
     revealOnReplay: true,
     threshold: 0.4,
-    ...options
+    ...options,
   };
+
+  // Calculate transitionColor if not provided
+  if (!options.transitionColor) {
+    config.transitionColor = lightenColor(config.accentColor, 60);
+  }
 
   let hasAnimated = false;
   let animatableChars = [];
@@ -38,7 +65,9 @@ export function textFlashyReveal(element, options = {}) {
   function splitText() {
     const text = element.textContent;
     element.textContent = "";
-    element.style.whiteSpace = "pre";
+    element.style.whiteSpace = "normal";
+    element.style.wordBreak = "break-word";
+    element.style.overflowWrap = "break-word";
 
     animatableChars = [];
 
@@ -46,19 +75,19 @@ export function textFlashyReveal(element, options = {}) {
       if (char === " ") {
         const space = document.createElement("span");
         space.textContent = " ";
-        space.style.display = "inline-block";
-        space.style.width = "0.35em";
+        space.style.display = "inline";
         element.appendChild(space);
       } else {
         const span = document.createElement("span");
         span.textContent = char;
-        span.style.display = "inline-block";
+        span.style.display = "inline";
         span.style.opacity = "0";
         span.style.color = config.accentColor;
         span.setAttribute("aria-hidden", "true");
         span.style.transition = `
           opacity ${config.fadeDuration}ms ease,
-          color ${config.colorDelay}ms ease
+          color ${config.fadeDuration}ms ease,
+          text-shadow ${config.glowDuration}ms ease
         `;
         element.appendChild(span);
         animatableChars.push(span);
@@ -68,9 +97,9 @@ export function textFlashyReveal(element, options = {}) {
 
   function shuffle(array) {
     return array
-      .map(item => ({ item, r: Math.random() }))
+      .map((item) => ({ item, r: Math.random() }))
       .sort((a, b) => a.r - b.r)
-      .map(o => o.item);
+      .map((o) => o.item);
   }
 
   function animate() {
@@ -83,8 +112,12 @@ export function textFlashyReveal(element, options = {}) {
         char.style.opacity = "1";
 
         setTimeout(() => {
-          char.style.color = config.finalColor;
-        }, config.colorDelay);
+          char.style.color = config.transitionColor;
+
+          setTimeout(() => {
+            char.style.color = config.finalColor;
+          }, config.colorDelay);
+        }, config.flashDelay);
       }, delay);
     });
   }
@@ -99,17 +132,21 @@ export function textFlashyReveal(element, options = {}) {
         char.style.color = config.accentColor;
 
         setTimeout(() => {
-          char.style.color = config.finalColor;
-        }, config.colorDelay);
+          char.style.color = config.transitionColor;
+
+          setTimeout(() => {
+            char.style.color = config.finalColor;
+          }, config.colorDelay);
+        }, config.flashDelay);
       }, delay);
     });
   }
 
   function reset(immediate = false) {
-    animatableChars.forEach(char => {
+    animatableChars.forEach((char) => {
       char.style.transition = immediate
         ? "none"
-        : `opacity ${config.fadeDuration}ms ease, color ${config.colorDelay}ms ease`;
+        : `opacity ${config.fadeDuration}ms ease, color ${config.flashDelay}ms ease`;
 
       char.style.opacity = "0";
       char.style.color = config.accentColor;
@@ -119,7 +156,7 @@ export function textFlashyReveal(element, options = {}) {
         char.offsetHeight;
         char.style.transition = `
           opacity ${config.fadeDuration}ms ease,
-          color ${config.colorDelay}ms ease
+          color ${config.flashDelay}ms ease
         `;
       }
     });
@@ -127,8 +164,8 @@ export function textFlashyReveal(element, options = {}) {
 
   function observe() {
     observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (!hasAnimated) {
               animate();
@@ -147,7 +184,7 @@ export function textFlashyReveal(element, options = {}) {
           }
         });
       },
-      { threshold: config.threshold }
+      { threshold: config.threshold },
     );
 
     observer.observe(element);
