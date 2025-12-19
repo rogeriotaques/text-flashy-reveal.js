@@ -19,26 +19,35 @@
                 padding: 80px;
             }
 
-            hgroup {
-                margin-bottom: 100vh;
-            }
-
             h1 {
                 font-size: 56px;
                 font-weight: 700;
                 line-height: 1.2;
             }
+
+            .gimme-some-space {
+                margin-bottom: 100vh;
+            }
         </style>
     </head>
     <body>
-        <hgroup>
+        <hgroup class="gimme-some-space">
             <h1 id="hero-1">TextFlashyReveal.js</h1>
-            <p>Sample page of how <b>TextFlashyReveal.js</b> does work and how to implement it.</p>
-            <p>Scroll down to see it in action. 👇</p>
+            <p>This sample page demonstrates how <b>TextFlashyReveal.js</b> does work.</p>
+            <p>You already saw it working in the title, which flashes every time it gets into the viewport.</p>
+            <p>Now scroll down to see it in action in other patterns... 👇</p>
         </hgroup>
 
-        <h2 id="hero-2">This second sentence animates only once!</h2>
-        <h3>And this one never animates. Now, scroll back. 👆🤗</h3>
+        <hgroup class="gimme-some-space">
+            <h2 id="hero-2">This text reveals only once, but always flashes!</h2>
+            <p>The first time this text gets into the viewport, it reveals and flashes. From the second time onwards, it only flashes without revealing. 🤗</p>
+            <p>Keep scrolling down to see it the next pattern... 👇</p>
+        </hgroup>
+
+        <hgroup>
+            <h2 id="hero-3">Finally, this text reveals and flashes just once!</h2>
+            <p>And this one never animates a second time. Now, scroll back. 👆🤗</p>
+        </hgroup>
 
         <br>
 
@@ -51,16 +60,24 @@
             import { textFlashyReveal } from "./text-flashy-reveal.js";
 
             textFlashyReveal(document.querySelector("#hero-1"), {
-            replay: true,
-            revealDelay: 35,
-            threshold: 0.5
+              replay: true,
+              revealDelay: 35,
+              threshold: 0.5
             });
 
             textFlashyReveal(document.querySelector("#hero-2"), {
-            revealDelay: 25,
-            threshold: 0.5,
-            fadeDuration: 250,
-            accentColor: 'blue'
+              revealDelay: 25,
+              threshold: 0.5,
+              fadeDuration: 250,
+              accentColor: 'blue',
+              revealOnReplay: false
+            });
+
+            textFlashyReveal(document.querySelector("#hero-3"), {
+              revealDelay: 25,
+              threshold: 0.5,
+              fadeDuration: 250,
+              accentColor: 'green'
             });
         </script>
     </body>

@@ -26,12 +26,14 @@ export function textFlashyReveal(element, options = {}) {
     fadeDuration: 350,
     colorDelay: 300,
     replay: false,
+    revealOnReplay: true,
     threshold: 0.4,
     ...options
   };
 
   let hasAnimated = false;
   let animatableChars = [];
+  let observer;
 
   function splitText() {
     const text = element.textContent;
@@ -87,6 +89,22 @@ export function textFlashyReveal(element, options = {}) {
     });
   }
 
+  function highlightOnly() {
+    const shuffled = shuffle(animatableChars);
+
+    shuffled.forEach((char, index) => {
+      const delay = index * config.revealDelay;
+
+      setTimeout(() => {
+        char.style.color = config.accentColor;
+
+        setTimeout(() => {
+          char.style.color = config.finalColor;
+        }, config.colorDelay);
+      }, delay);
+    });
+  }
+
   function reset(immediate = false) {
     animatableChars.forEach(char => {
       char.style.transition = immediate
@@ -108,16 +126,22 @@ export function textFlashyReveal(element, options = {}) {
   }
 
   function observe() {
-    const observer = new IntersectionObserver(
+    observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            if (!hasAnimated || config.replay) {
+            if (!hasAnimated) {
               animate();
               hasAnimated = true;
+            } else if (config.replay) {
+              if (config.revealOnReplay) {
+                animate();
+              } else {
+                highlightOnly();
+              }
             }
           } else {
-            if (config.replay && hasAnimated) {
+            if (config.replay && hasAnimated && config.revealOnReplay) {
               reset(true);
             }
           }
@@ -136,6 +160,8 @@ export function textFlashyReveal(element, options = {}) {
 
   // Return cleanup function
   return () => {
-    observer.disconnect();
+    if (observer) {
+      observer.disconnect();
+    }
   };
 }
