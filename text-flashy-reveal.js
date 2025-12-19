@@ -86,8 +86,7 @@ export function textFlashyReveal(element, options = {}) {
         span.setAttribute("aria-hidden", "true");
         span.style.transition = `
           opacity ${config.fadeDuration}ms ease,
-          color ${config.fadeDuration}ms ease,
-          text-shadow ${config.glowDuration}ms ease
+          color ${config.fadeDuration}ms ease
         `;
         element.appendChild(span);
         animatableChars.push(span);
@@ -146,7 +145,7 @@ export function textFlashyReveal(element, options = {}) {
     animatableChars.forEach((char) => {
       char.style.transition = immediate
         ? "none"
-        : `opacity ${config.fadeDuration}ms ease, color ${config.flashDelay}ms ease`;
+        : `opacity ${config.fadeDuration}ms ease, color ${config.fadeDuration}ms ease`;
 
       char.style.opacity = "0";
       char.style.color = config.accentColor;
@@ -156,7 +155,7 @@ export function textFlashyReveal(element, options = {}) {
         char.offsetHeight;
         char.style.transition = `
           opacity ${config.fadeDuration}ms ease,
-          color ${config.flashDelay}ms ease
+          color ${config.fadeDuration}ms ease
         `;
       }
     });
