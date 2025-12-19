@@ -170,16 +170,11 @@
         <script type="module">
             import { textFlashyReveal } from "./text-flashy-reveal.js";
 
-            textFlashyReveal(document.querySelector("#hero-1"), {
-                replay: true,
-                revealDelay: 35,
-                threshold: 0.5,
-            });
+            textFlashyReveal(document.querySelector("#hero-1"));
 
             textFlashyReveal(document.querySelector("#hero-2"), {
                 revealDelay: 25,
-                threshold: 0.5,
-                fadeDuration: 250,
+                fadeDuration: 200,
                 accentColor: "lightblue",
                 revealOnReplay: false,
             });
@@ -187,15 +182,9 @@
             textFlashyReveal(document.querySelector("#hero-3"), {
                 revealDelay: 25,
                 threshold: 0.5,
-                fadeDuration: 250,
+                fadeDuration: 200,
                 accentColor: "lightgreen",
-            });
-
-            textFlashyReveal(document.querySelector("#link"), {
-                revealDelay: 25,
-                threshold: 0.5,
-                fadeDuration: 100,
-                accentColor: "pink",
+                replay: false,
             });
         </script>
     </body>
