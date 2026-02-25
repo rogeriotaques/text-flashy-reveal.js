@@ -63,33 +63,73 @@ export function textFlashyReveal(element, options = {}) {
   let observer;
 
   function splitText() {
-    const text = element.textContent;
-    element.textContent = "";
-    element.style.whiteSpace = "normal";
-    element.style.wordBreak = "break-word";
-    element.style.overflowWrap = "break-word";
+    element.style.whiteSpace = "pre";
 
+    const content = [];
+    const walk = document.createTreeWalker(element, NodeFilter.SHOW_ALL, null, false);
+    let node = walk.nextNode();
+
+    while (node) {
+      content.push(node);
+      node = walk.nextNode();
+    }
+
+    element.innerHTML = "";
     animatableChars = [];
 
-    for (const char of text) {
-      if (char === " ") {
-        const space = document.createElement("span");
-        space.textContent = " ";
-        space.style.display = "inline";
-        element.appendChild(space);
-      } else {
-        const span = document.createElement("span");
-        span.textContent = char;
-        span.style.display = "inline";
-        span.style.opacity = "0";
-        span.style.color = config.accentColor;
-        span.setAttribute("aria-hidden", "true");
-        span.style.transition = `
-          opacity ${config.fadeDuration}ms ease,
-          color ${config.fadeDuration}ms ease
-        `;
-        element.appendChild(span);
-        animatableChars.push(span);
+    for (const node of content) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        if (node.tagName === 'BR') {
+          element.appendChild(node.cloneNode(true));
+        } else {
+          for (const char of node.textContent) {
+            if (char === " ") {
+              const space = document.createElement("span");
+              space.textContent = " ";
+              space.style.display = "inline-block";
+              space.style.width = "0.35em";
+              element.appendChild(space);
+            } else {
+              const span = document.createElement("span");
+              span.textContent = char;
+              span.style.display = "inline-block";
+              span.style.opacity = "0";
+              span.style.color = config.accentColor;
+              span.setAttribute("aria-hidden", "true");
+              span.setAttribute("data-flashy-char", "");
+              span.style.transition = `
+                opacity ${config.fadeDuration}ms ease,
+                color ${config.colorDelay}ms ease
+              `;
+              element.appendChild(span);
+              animatableChars.push(span);
+            }
+          }
+        }
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        for (const char of node.textContent) {
+          if (char === " ") {
+            const space = document.createElement("span");
+            space.textContent = " ";
+            space.style.display = "inline-block";
+            space.style.width = "0.35em";
+            element.appendChild(space);
+          } else {
+            const span = document.createElement("span");
+            span.textContent = char;
+            span.style.display = "inline-block";
+            span.style.opacity = "0";
+            span.style.color = config.accentColor;
+            span.setAttribute("aria-hidden", "true");
+            span.setAttribute("data-flashy-char", "");
+            span.style.transition = `
+              opacity ${config.fadeDuration}ms ease,
+              color ${config.colorDelay}ms ease
+            `;
+            element.appendChild(span);
+            animatableChars.push(span);
+          }
+        }
       }
     }
   }
@@ -175,6 +215,8 @@ export function textFlashyReveal(element, options = {}) {
               } else {
                 highlightOnly();
               }
+            } else {
+              highlightOnly();
             }
           } else {
             if (config.replay && hasAnimated && config.revealOnReplay) {
