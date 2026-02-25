@@ -39,9 +39,11 @@ Copy the `textFlashyReveal` function from the source file directly into your pro
     <h1 id="hero">Welcome to TextFlashyReveal.js</h1>
 
     <script type="module">
-      import { textFlashyReveal } from "./text-reveal.js";
+        import { textFlashyReveal } from "./text-reveal.js"; // When importing from a local file
+        import { textFlashyReveal } from "text-flashy-reveal"; // When importing from node_modules
+        import { textFlashyReveal } from "https://unpkg.com/text-flashy-reveal.js@0.1.0/text-flashy-reveal.js"; // When importing from CDN
 
-      textFlashyReveal(document.querySelector("#hero"));
+        textFlashyReveal(document.querySelector("#hero"));
     </script>
   </body>
 </html>

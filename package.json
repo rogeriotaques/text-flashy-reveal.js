@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/rogeriotaques/text-flashy-reveal.js/issues"
   },
-  "homepage": "https://github.com/rogeriotaques/text-flashy-reveal.js#readme"
+  "homepage": "https://github.com/rogeriotaques/text-flashy-reveal.js#readme",
+  "scripts": {
+    "start": "php -S localhost:9898 -t ."
+  }
 }
