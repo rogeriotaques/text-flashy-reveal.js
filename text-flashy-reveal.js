@@ -107,7 +107,10 @@ export function textFlashyReveal(element, options = {}) {
           }
         }
       } else if (node.nodeType === Node.TEXT_NODE) {
-        for (const char of node.textContent) {
+        const text = node.textContent.trim();
+        if (!text) continue;
+
+        for (const char of text) {
           if (char === " ") {
             const space = document.createElement("span");
             space.textContent = " ";
@@ -215,8 +218,6 @@ export function textFlashyReveal(element, options = {}) {
               } else {
                 highlightOnly();
               }
-            } else {
-              highlightOnly();
             }
           } else {
             if (config.replay && hasAnimated && config.revealOnReplay) {
